@@ -40,6 +40,12 @@ export const Route = createFileRoute("/")({
           "Portfolio of Adam Nabeel — ECE engineer and researcher specializing in aerospace systems, GPS-denied navigation, sensor fusion, machine learning, and autonomous vehicles.",
       },
     ],
+    links: [
+      { rel: "icon", href: "/icon.png?v=2", type: "image/png" },
+      { rel: "icon", href: "/icon.ico?v=2", type: "image/x-icon" },
+      { rel: "shortcut icon", href: "/icon.ico?v=2" },
+      { rel: "apple-touch-icon", href: "/icon.png?v=2" },
+    ],
   }),
   component: Portfolio,
 });
@@ -52,17 +58,25 @@ export const Route = createFileRoute("/")({
 const PROFILE = {
   name: "Adam Nabeel",
   title: "ECE Engineer",
-  intro: "Building intelligent systems for the future of autonomous technologies. Currently seeking opportunities in Embedded Systems, UAVs, Navigation, ADAS, and Intelligent Mobility.",
+  intro: "Building intelligent systems for the future of autonomous mobility. Currently seeking opportunities in Embedded Systems, UAV navigation, GPS-denied navigation, Advanced Driver Assistance Systems (ADAS), and intelligent mobility.",
   location: "Bengaluru, India",
   email: "adamnabeel2004@outlook.com",
 
-  resumeUrl: "/public/ADAM_NABEEL_RESUME.pdf",
+  resumeUrl: "/resume",
   social: {
     github: "https://github.com/adamnabeel",
     linkedin: "https://www.linkedin.com/in/adamnabeel/",
     twitter: "https://x.com/adamnabeel2004",
   },
 };
+
+function getDocViewerUrl(fileUrl: string | undefined, title: string): string {
+  if (!fileUrl || fileUrl === "#") return "#";
+  if (fileUrl.startsWith("/")) {
+    return `/doc?file=${encodeURIComponent(fileUrl)}&title=${encodeURIComponent(title)}`;
+  }
+  return fileUrl;
+}
 
 const NAV = [
   { id: "about", label: "About" },
@@ -87,7 +101,7 @@ const SKILLS: { title: string; icon: React.ElementType; items: string[] }[] = [
 
   { title: "AI / ML", icon: Brain, items: ["Machine Learning", "Neural Networks", "Predictive Modelling", "Data Analysis"] },
 
-  { title: "Navigation", icon: Rocket, items: ["GPS-Denied Navigation", "Sensor Fusion", "Kalman Filter", "Unscented Kalman Filter (UKF)", "State Estimation"] },
+  { title: "Navigation", icon: Rocket, items: ["GPS-Denied Navigation", "Sensor Fusion", "Kalman Filter", "Unscented Kalman Filter (UKF)", "State and Parameter Estimation"] },
 
   { title: "Embedded", icon: Cpu, items: ["Arduino", "Raspberry Pi", "Microcontroller Programming", "Real-Time Systems", "Keil μVision"] },
 
@@ -97,7 +111,7 @@ const SKILLS: { title: string; icon: React.ElementType; items: string[] }[] = [
 
   { title: "Engineering Tools", icon: GitBranch, items: ["Cadence", "Solid Edge", "FFT Analysis", "Technical Documentation"] },
 
-  { title: "Research", icon: Users, items: ["Technical Writing", "Problem Solving", "Research", "Project Leadership", "Team Collaboration"] },
+  { title: "Research", icon: Users, items: ["Technical Writing", "Problem Solving", "Research", "Developement", "Project Leadership", "Team Collaboration"] },
 ];
 
 const EXPERIENCE = [
@@ -132,7 +146,7 @@ const EXPERIENCE = [
       "Developed and evaluated DSRC-based Vehicle-to-Vehicle (V2V) communication algorithms for real-time collision avoidance and intelligent transportation systems using NS-3 and MATLAB.",
     stack: ["MATLAB", "NS-3", "DSRC", "V2V Communication"],
     achievements: [
-      "Designed and simulated DSRC-based V2V communication models for collision avoidance.",
+      "Simulated DSRC-based V2V communication models for the collision avoidance.",
       "Developed network simulation scenarios using NS-3 for vehicular communication analysis.",
       "Performed quantitative performance evaluation and validation using MATLAB.",
     ],
@@ -160,13 +174,13 @@ const EXPERIENCE = [
   },
 
   {
-    company: "CSIR – National Aerospace Laboratories (NAL)",
+    company: "CSIR – National Aerospace Laboratories (NAL),Bengaluru",
     logo: "/logos/CSIR_NAL.png",
     role: "Research Assistant",
     duration: "June 2025 — July 2025",
     location: "Bengaluru, Karnataka, India",
     summary:
-      "Developed vehicle state prediction and localization algorithms for Vehicle-to-Vehicle (V2V) communication systems using MATLAB and Python, improving positioning accuracy through sensor fusion and neural network-based estimation.",
+      "Developed state estimation and localization algorithms for Vehicle-to-Vehicle (V2V) communication systems using MATLAB and Python, improving positioning accuracy through sensor fusion and neural network-based estimation.",
     stack: [
       "MATLAB",
       "Python",
@@ -175,9 +189,9 @@ const EXPERIENCE = [
       "V2V Communication",
     ],
     achievements: [
-      "Developed vehicle state prediction models for accurate position estimation in V2V communication systems.",
-      "Implemented neural network-based sensor models to improve vehicle localization performance.",
-      "Enhanced positioning accuracy using sensor fusion and state estimation techniques.",
+      "Developed mathematical model of vehicle dynamics to estimate accurate position in V2V communication systems.",
+      "Implemented neural network-based sensor models to improve the vehicle localization performance.",
+      "Enhanced positioning accuracy of vehicle using sensor fusion and state estimation techniques.",
     ],
   },
 
@@ -292,7 +306,7 @@ const PROJECTS: Project[] = [
       problem:
         "Autonomous UAVs experience significant navigation drift when GPS signals become unavailable, making accurate localization challenging.",
       background:
-        "Developed at CSIR–National Aerospace Laboratories (NAL) to enable robust UAV navigation in GPS-denied environments using sensor fusion and artificial intelligence.",
+        "Developed at CSIR–National Aerospace Laboratories (NAL) Bengaluru to enable robust UAV navigation in GPS-denied environments using sensor fusion and artificial intelligence.",
       objectives: [
         "Develop a robust GPS-denied navigation framework.",
         "Reduce INS drift using UKF-based sensor fusion.",
@@ -936,19 +950,17 @@ function About() {
         </div>
         <div className="lg:col-span-7 space-y-6 text-base leading-relaxed text-muted-foreground" data-aos="fade-up">
           <p>
-            I&apos;m an Electronics and Communication Engineering graduate with a passion for
-            aerospace systems, autonomous navigation, and intelligent transportation. My research
-            experience at CSIR–National Aerospace Laboratories (NAL) and the National Institute of
-            Technology Karnataka (NITK) has focused on GPS-denied navigation, sensor fusion,
+            I'm an Electronics and Communication Engineer with a passion for aerospace systems, autonomous navigation,
+            and intelligent transportation. My research experience at CSIR–National Aerospace Laboratories (NAL) and
+            the National Institute of Technology Karnataka (NITK) has focused on GPS-denied navigation, sensor fusion,
             vehicle localization, and machine learning for autonomous systems.
           </p>
 
           <p>
-            I enjoy solving complex engineering problems by combining strong mathematical
-            foundations with practical implementation. Using MATLAB, Simulink, Python, and
-            embedded systems, I develop intelligent algorithms for state estimation, control
-            systems, autonomous vehicles, and UAV navigation while translating research into
-            real-world engineering solutions.
+            I enjoy solving complex engineering problems by combining strong mathematical foundations with practical
+            implementation. Using MATLAB, Simulink, Python, and embedded systems, I have developed intelligent algorithms
+            for the state estimation and  GPS-denied navigation with sensor fusion for autonomous UAV Vehicles.
+
           </p>
         </div>
       </div>
@@ -1010,7 +1022,7 @@ function Experience() {
       <div className="container-x">
         <SectionHeader
           eyebrow="Experience"
-          title="Research, development, and engineering."
+          title="Research and Development in Engineering."
           description="Exploring complex engineering challenges through mathematical modeling, simulation, embedded development, and AI-driven approaches."
         />
         <div className="mt-16 relative">
@@ -1339,7 +1351,7 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
 
 
               <a
-                href={p.links.documentation}
+                href={getDocViewerUrl(p.links.documentation, `${p.title} — Documentation`)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-sm hover:text-accent"
@@ -1476,7 +1488,7 @@ function Research() {
               <div className="mt-6 pt-4 border-t hairline flex items-center justify-between text-xs">
                 <span className="text-muted-foreground">DOI: {p.doi}</span>
                 <a
-                  href={p.pdf}
+                  href={getDocViewerUrl(p.pdf, p.title)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-accent hover:underline"
@@ -1516,7 +1528,7 @@ function Certifications() {
                 <div className="mt-3 text-[11px] text-muted-foreground flex items-center justify-between gap-2">
                   <span></span>
                   <a
-                    href={c.certificate}
+                    href={getDocViewerUrl(c.certificate, `${c.name} — ${c.issuer}`)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-accent hover:underline inline-flex items-center gap-0.5"
